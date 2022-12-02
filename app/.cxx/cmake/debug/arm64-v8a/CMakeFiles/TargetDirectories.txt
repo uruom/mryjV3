@@ -1,0 +1,3 @@
+C:/Document/mryj/BuildGlasses/Deeplearning/up/picodet_detection_demo/app/.cxx/cmake/debug/arm64-v8a/CMakeFiles/Native.dir
+C:/Document/mryj/BuildGlasses/Deeplearning/up/picodet_detection_demo/app/.cxx/cmake/debug/arm64-v8a/CMakeFiles/edit_cache.dir
+C:/Document/mryj/BuildGlasses/Deeplearning/up/picodet_detection_demo/app/.cxx/cmake/debug/arm64-v8a/CMakeFiles/rebuild_cache.dir

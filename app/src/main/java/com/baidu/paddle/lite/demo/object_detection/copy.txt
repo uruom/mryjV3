@@ -1,0 +1,70 @@
+package com.baidu.paddle.lite.demo.object_detection;
+
+import android.graphics.Bitmap;
+
+
+/*
+Native 实现 Java 与 C++ 端代码互传的桥梁功能 包含三个功能：init初始化、 process预测处理 和 release释放
+备注： Java 的 native 方法和 C++ 的 native 方法要一一对应
+ */
+public class Native {
+    static {
+        System.loadLibrary("Native");
+    }
+
+    private long ctx = 0;
+
+    public boolean init(String modelDir,
+                        String labelPath,
+                        int cpuThreadNum,
+                        String cpuPowerMode,
+                        int inputWidth,
+                        int inputHeight,
+                        float[] inputMean,
+                        float[] inputStd,
+                        float scoreThreshold) {
+        System.out.println("测试1");
+        ctx = nativeInit(
+                modelDir,
+                labelPath,
+                cpuThreadNum,
+                cpuPowerMode,
+                inputWidth,
+                inputHeight,
+                inputMean,
+                inputStd,
+                scoreThreshold);
+        System.out.println("测试2");
+        return ctx == 0;
+    }
+
+    public boolean release() {
+        if (ctx == 0) {
+            return false;
+        }
+        return nativeRelease(ctx);
+    }
+
+    public int[] process(Bitmap ARGB8888ImageBitmap, String savedImagePath) {
+        int[] nullarray=new int[0];
+        if (ctx == 0) {
+            return nullarray;
+        }
+        // ARGB8888 bitmap is only supported in native, other color formats can be added by yourself.
+        return nativeProcess(ctx, ARGB8888ImageBitmap, savedImagePath);
+    }
+// this ！！！！！
+    public static native long nativeInit(String modelDir,
+                                         String labelPath,
+                                         int cpuThreadNum,
+                                         String cpuPowerMode,
+                                         int inputWidth,
+                                         int inputHeight,
+                                         float[] inputMean,
+                                         float[] inputStd,
+                                         float scoreThreshold);
+
+    public static native boolean nativeRelease(long ctx);
+
+    public static native int[] nativeProcess(long ctx, Bitmap ARGB888ImageBitmap, String savedImagePath);
+}
