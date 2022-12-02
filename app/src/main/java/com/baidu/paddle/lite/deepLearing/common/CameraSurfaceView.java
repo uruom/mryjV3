@@ -1,4 +1,4 @@
-package com.baidu.paddle.lite.demo.common;
+package com.baidu.paddle.lite.deepLearing.common;
 
 import android.content.Context;
 import android.graphics.Bitmap;
@@ -6,7 +6,6 @@ import android.graphics.SurfaceTexture;
 import android.hardware.Camera;
 import android.hardware.Camera.CameraInfo;
 import android.hardware.Camera.Size;
-import android.media.MediaPlayer;
 import android.opengl.GLES11Ext;
 import android.opengl.GLES20;
 import android.opengl.GLSurfaceView;
@@ -26,7 +25,6 @@ import java.nio.FloatBuffer;
 import java.util.List;
 
 import Veriable.TransmissionVeriable;
-import musicPlay.MusicBroadcast;
 
 public class CameraSurfaceView extends GLSurfaceView implements Renderer,
         SurfaceTexture.OnFrameAvailableListener {

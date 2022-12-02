@@ -11,11 +11,10 @@ import android.widget.Button;
 import android.widget.ImageView;
 
 
-import com.baidu.paddle.lite.demo.object_detection.MainActivity;
-import com.baidu.paddle.lite.demo.object_detection.R;
+import com.baidu.paddle.lite.deepLearing.object_detection.MainActivity;
+import com.baidu.paddle.lite.deepLearing.object_detection.R;
 
 import Veriable.TransmissionVeriable;
-import musicPlay.PlayMusic;
 import picturetransmission.PictureTransmission2;
 
 public class TestMainActivity extends AppCompatActivity {

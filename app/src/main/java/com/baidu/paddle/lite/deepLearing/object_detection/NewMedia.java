@@ -1,6 +1,6 @@
-package com.baidu.paddle.lite.demo.object_detection;
+package com.baidu.paddle.lite.deepLearing.object_detection;
 
-import static com.baidu.paddle.lite.demo.object_detection.MainActivity.isPlayingMusic;
+import static com.baidu.paddle.lite.deepLearing.object_detection.MainActivity.isPlayingMusic;
 
 import android.media.MediaPlayer;
 import android.media.VolumeShaper;

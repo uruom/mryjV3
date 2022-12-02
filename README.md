@@ -1,9 +1,6 @@
-# 目标检测 C++ API Demo 使用指南
+# 盲人眼镜demo使用指南
 
-在 Android 上实现实时的目标检测功能，此 Demo 有很好的的易用性和开放性，如在 Demo 中跑自己训练好的模型等。
-本文主要介绍目标检测 Demo 运行方法和如何在更新模型/输入/输出处理下，保证目标检测 demo 仍可继续运行。
-
-## 如何运行目标检测 Demo
+## 1.如何运行目标检测 Demo
 
 ### 环境准备
 
@@ -15,8 +12,8 @@ Paddle Lite 预测库版本一样的 NDK
 
 ### 部署步骤
 
-1. 目标检测 Demo 位于 `Paddle-Lite-Demo/object_detection/android/app/cxx/picodet_detection_demo` 目录
-2. 用 Android Studio 打开 picodet_detection_demo 工程
+1. 盲人眼镜所使用的目标检测 model 位于 `mryjV3/app/src/main/assets/models/picodet_xs_416_coco_lcnet_new` 目录
+2. 用 Android Studio 打开 主函数`main` 工程，其运行主函数位于`mryjV3/app/src/main/java/mryj/TestMainActivity`
 3. 手机连接电脑，打开 USB 调试和文件传输模式，并在 Android Studio 上连接自己的手机设备（手机需要开启允许从 USB 安装软件权限）
 
 <p align="center">
@@ -29,61 +26,26 @@ Paddle Lite 预测库版本一样的 NDK
 >> 还有一种 NDK 配置方法，你可以在 `picodet_detection_demo/local.properties` 文件中手动完成 NDK 路径配置，如下图所示
 >> 如果以上步骤仍旧无法解决 NDK 配置错误，请尝试根据 Andriod Studio 官方文档中的[更新 Android Gradle 插件](https://developer.android.com/studio/releases/gradle-plugin?hl=zh-cn#updating-plugin)章节，尝试更新Android Gradle plugin版本。
 
-4. 点击 Run 按钮，自动编译 APP 并安装到手机。(该过程会自动下载 Paddle Lite 预测库和模型，需要联网)
-成功后效果如下，图一：APP 安装到手机        图二： APP 打开后的效果，会自动识别图片中的物体并标记
+4. 点击 Run 按钮，自动编译 APP 并安装到手机。(该过程会自动下载 Paddle Lite 预测库和模型，需要联网)。在手机运行前，可以提前打开wifi连接远程摄像头。在有连接的情况下，手机进行识别和处理的将会是远程摄像头传输的图片，反之，则是手机本身摄像头的图片。
+5. 进入app，在中间会有按钮现实当前app状态，为了满足盲人需求，所有状态切换间都有语音播报。点击中间按钮后，即进行识别，对于识别出的障碍物进行方位和物体播报。
 
-  | APP 图标 | APP 效果 |
-  | ---     | --- |
-  | ![app_pic ](https://paddlelite-demo.bj.bcebos.com/demo/object_detection/docs_img/android/app_pic4.jpg)    | ![app_res ](https://paddlelite-demo.bj.bcebos.com/demo/object_detection/docs_img/android/app_run_res3.jpg) |
+## 2.Demo 内容介绍
 
->> 备注：本 demo 支持 Picodet 增强版模型，即将模型的后处理写入网络中，用户无需书写复杂的后处理nms等逻辑操作。
-
-|序号| 说明 |[Picodet]( https://github.com/PaddlePaddle/PaddleDetection/tree/release/2.4/configs/picodet/legacy_model)和	[Picodet 增强版]( https://github.com/PaddlePaddle/PaddleDetection/tree/release/2.4/configs/picodet)|	
-|---|---|---|
-|0|算法前后处理|Picodet 和 Picodet 增强版，算法的前、后处理完全相同<br>1.前处理：包括 Detection 常见的减均值等操作<br>2.后处理：包括 nms 等|
-|1|后处理写入模型结构|1. 该 Picodet Demo 使用[PicoDet-S 320*320](https://paddledet.bj.bcebos.com/deploy/Inference/picodet_s_320_coco_lcnet.tar)实现<br>2.该 Demo 仅支持增强版模型替换，即将模型的后处理写入网络，具体操作方法请参考[PaddleDetection导出部分](https://github.com/PaddlePaddle/PaddleDetection/tree/release/2.4/configs/picodet#%E5%AF%BC%E5%87%BA%E5%8F%8A%E8%BD%AC%E6%8D%A2%E6%A8%A1%E5%9E%8B)）<br>**注意：**替换模型时，需要修改输入shape、类别数等；（1）详细修改数值需结合实际训练情况完成（2）修改代码位置下方文档说明 | 
-|2|后处理不在模型结构|该 Demo无 后处理解码+nms逻辑，不支持「不带后处理的模型」替换工作，需要用户自行添加完成|
+先整体介绍下目标检测 Demo 的代码结构之间的联系和接口，然后再分别简要的介绍 Demo 各部分功能.
 
 
-## 更新预测库
-
-* Paddle Lite 项目：https://github.com/PaddlePaddle/Paddle-Lite
- * 参考 [Paddle Lite 源码编译文档](https://paddle-lite.readthedocs.io/zh/latest/source_compile/compile_env.html)，编译 Android 预测库
- * 编译最终产物位于 `build.lite.xxx.xxx.xxx` 下的 `inference_lite_lib.xxx.xxx`
-    * 替换 java 库
-        * jar 包
-          将生成的 `build.lite.android.xxx.gcc/inference_lite_lib.android.xxx/java/jar/PaddlePredictor.jar` 替换 Demo 中的 `Paddle-Lite-Demo/object_detection/andrdoid/app/cxx/picodet_detection_demo/app/PaddleLite/java/PaddlePredictor.jar`
-        * Java so
-            * armeabi-v7a
-              将生成的 `build.lite.android.armv7.gcc/inference_lite_lib.android.armv7/java/so/libpaddle_lite_jni.so` 库替换 Demo 中的 `Paddle-Lite-Demo/object_detection/andrdoid/app/cxx/picodet_detection_demo/app/PaddleLite/java/libs/armeabi-v7a/libpaddle_lite_jni.so`
-            * arm64-v8a
-              将生成的 `build.lite.android.armv8.gcc/inference_lite_lib.android.armv8/java/so/libpaddle_lite_jni.so` 库替换 Demo 中的 `Paddle-Lite-Demo/object_detection/andrdoid/app/cxx/picodet_detection_demo/app/PaddleLite/java/libs/arm64-v8a/libpaddle_lite_jni.so`
-    * 替换 c++ 库
-        * 头文件
-          将生成的 `build.lite.android.xxx.gcc/inference_lite_lib.android.xxx/cxx/include` 文件夹替换 Demo 中的 `Paddle-Lite-Demo/object_detection/andrdoid/app/cxx/picodet_detection_demo/app/PaddleLite/cxx/include`
-        * armeabi-v7a
-          将生成的 `build.lite.android.armv7.gcc/inference_lite_lib.android.armv7/cxx/libs/libpaddle_lite_api_shared.so` 库替换 Demo 中的 `Paddle-Lite-Demo/object_detection/andrdoid/app/cxx/picodet_detection_demo/app/PaddleLite/cxx/libs/armeabi-v7a/libpaddle_lite_api_shared.so`
-        * arm64-v8a
-          将生成的 `build.lite.android.armv8.gcc/inference_lite_lib.android.armv8/cxx/libs/libpaddle_lite_api_shared.so` 库替换 Demo 中的 `Paddle-Lite-Demo/object_detection/andrdoid/app/cxx/picodet_detection_demo/app/PaddleLite/cxx/libs/arm64-v8a/libpaddle_lite_api_shared.so`
-
-## Demo 内容介绍
-
-先整体介绍下目标检测 Demo 的代码结构，然后再从 Java 和 C++ 两部分简要的介绍 Demo 每部分功能.
-
-<p align="center"><img src="https://paddlelite-demo.bj.bcebos.com/demo/object_detection/docs_img/android/predict3.jpg"/></p>
-
-1. `Native.java`： Java 预测代码
+1. `deepLearing`： 深度学习文件夹
 
 ```shell
 # 位置：
-picodet_detection_demo/app/src/main/java/com/baidu/paddle/lite/demo/object_detection/Native.java
+mryjV3/app/src/main/java/deepLearning
 ```
 
-2. `Native.cc`： Jni 预测代码用于 Java 与 C++ 语言传递信息
+2. `mryj`： 盲人眼镜主函数，架构文件夹
 
 ```shell
 # 位置：
-picodet_detection_demo/app/src/main/cpp/Native.cc
+mryjV3/app/src/main/cpp/Native.cc
 ```
 
 3. `Pipeline.cc`： C++ 预测代码
@@ -196,14 +158,14 @@ picodet_detection_demo/app/cpp/CMakeLists.txt
     包含三个功能：`init`初始化、 `process`预测处理 和 `release`释放
     备注：
         Java 的 native 方法和 C++ 的 native 方法要一一对应
-     
+    
  ### C++ 端（native）
 
  * Native
-  实现 Java 与 C++ 端代码互传的桥梁功能，将 Java 数值转换为 c++ 数值，调用 c++ 端的完成人脸关键点检测功能
-  **注意：**
-  Native 文件生成方法：
-   
+    实现 Java 与 C++ 端代码互传的桥梁功能，将 Java 数值转换为 c++ 数值，调用 c++ 端的完成人脸关键点检测功能
+    **注意：**
+    Native 文件生成方法：
+
   ```shell
    cd app/src/java/com/baidu/paddle/lite/demo/face_keypoints_detection
    # 在当前目录会生成包含 Native 方法的头文件，用户可以将其内容拷贝至 `cpp/Native.cc` 中
@@ -211,10 +173,10 @@ picodet_detection_demo/app/cpp/CMakeLists.txt
   ```
 
  * Pipeline
-  实现输入预处理、推理执行和输出后处理的流水线处理，支持多个模型的串行处理
+    实现输入预处理、推理执行和输出后处理的流水线处理，支持多个模型的串行处理
 
  * Utils
-  实现其他辅助功能，如 `NHWC` 格式转 `NCHW` 格式、字符串处理等
+    实现其他辅助功能，如 `NHWC` 格式转 `NCHW` 格式、字符串处理等
 
  * 新增模型支持
     - 在 Pipeline 文件中新增模型的预测类，实现图像预处理、预测和图像后处理功能
@@ -500,3 +462,9 @@ bool Pipeline::Process(cv::Mat &rgbaImage, std::string savedImagePath)；
 
 ## 性能优化方法
 如果你觉得当前性能不符合需求，想进一步提升模型性能，可参考[首页中性能优化文档](/README.md)完成性能优化。
+
+
+
+
+
+reference：https://github.com/PaddlePaddle/Paddle-Lite

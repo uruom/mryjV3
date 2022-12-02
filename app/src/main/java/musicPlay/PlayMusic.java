@@ -4,7 +4,7 @@ import android.media.MediaPlayer;
 import android.support.v7.app.AppCompatActivity;
 
 
-import com.baidu.paddle.lite.demo.object_detection.R;
+import com.baidu.paddle.lite.deepLearing.object_detection.R;
 
 import Veriable.TransmissionVeriable;
 

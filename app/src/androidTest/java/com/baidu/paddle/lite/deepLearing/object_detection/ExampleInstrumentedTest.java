@@ -1,4 +1,4 @@
-package com.baidu.paddle.lite.demo.object_detection;
+package com.baidu.paddle.lite.deepLearing.object_detection;
 
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;

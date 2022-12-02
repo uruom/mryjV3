@@ -1,4 +1,4 @@
-package com.baidu.paddle.lite.demo.object_detection;
+package com.baidu.paddle.lite.deepLearing.object_detection;
 
 import android.Manifest;
 import android.app.Activity;
@@ -14,20 +14,18 @@ import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
-import android.util.Log;
 import android.view.*;
 import android.widget.*;
 
-import com.baidu.paddle.lite.demo.common.CameraSurfaceView;
-import com.baidu.paddle.lite.demo.common.Utils;
-import com.baidu.paddle.lite.demo.object_detection.R;
+import com.baidu.paddle.lite.deepLearing.common.CameraSurfaceView;
+import com.baidu.paddle.lite.deepLearing.common.Utils;
+import com.baidu.paddle.lite.deepLearing.object_detection.R;
 
 import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import Veriable.TransmissionVeriable;
-import musicPlay.MusicBroadcast;
 
 public class MainActivity extends Activity implements View.OnClickListener, CameraSurfaceView.OnTextureChangedListener {
     private static final String TAG = MainActivity.class.getSimpleName();

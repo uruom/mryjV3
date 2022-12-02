@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.baidu.paddle.lite.demo.common;
+package com.baidu.paddle.lite.deepLearing.common;
 
 import android.content.res.Configuration;
 import android.os.Bundle;
