@@ -1,11 +1,2 @@
 include ':app'
-def opencvsdk='C:/Document/mryj/BuildGlasses/Deeplearning/up/picodet_detection_demo/openCVLibrary341'
-////   // You can put declaration above into gradle.properties file instead (including file in HOME directory),
-////   // but without 'def' and apostrophe symbols ('): opencvsdk=<path_to_opencv_android_sdk_rootdir>
-include ':opencv'
-project(':opencv').projectDir = new File(opencvsdk + '/sdk')
-
-include ':java'
-include ':java'
-include ':sdk'
 include ':openCVLibrary341'

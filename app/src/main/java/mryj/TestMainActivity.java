@@ -10,7 +10,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 
-
 import com.baidu.paddle.lite.demo.object_detection.MainActivity;
 import com.baidu.paddle.lite.demo.object_detection.R;
 
@@ -68,6 +67,7 @@ public class TestMainActivity extends AppCompatActivity {
     }
     protected void musicPlay(Estatus estatus) throws InterruptedException {
 //        startActivity(intent);
+        Mat mat = new Mat();
         switch (estatus){
             case Prime:
                 mediaPlayerEnd.start();
@@ -78,7 +78,6 @@ public class TestMainActivity extends AppCompatActivity {
                 System.out.println("oijiojoio");
 //                btn_start.setText("确认开始");
                 running();
-                Mat mat = new Mat();
                 break;
             case IsClose:
                 mediaPlayerIsEnd.start();
@@ -115,7 +114,6 @@ public class TestMainActivity extends AppCompatActivity {
             }
 //            sleep(2000);
         System.out.println("test");
-            Mat mat = new Mat();
         startActivity(intent);
             System.out.println("返回正常");
 //        playMusic.startPlay(transmissionVeriable);

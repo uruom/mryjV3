@@ -1,7 +1,5 @@
 # ninja log v5
-134	1268	685862447	CMakeFiles/Native.dir/Utils.cc.o	7692e89892234314
-1	1596	685862447	CMakeFiles/Native.dir/Native.cc.o	3b16e111fc1427af
-69	1866	685862447	CMakeFiles/Native.dir/Pipeline.cc.o	b859ebc93cc672e1
-1866	2640	685862448	C:/Document/mryj/BuildGlasses/Deeplearning/up/picodet_detection_demo/app/build/intermediates/cmake/debug/obj/arm64-v8a/libNative.so	61d180af8331979e
-4	1220	688314159	CMakeFiles/Native.dir/Native.cc.o	3b16e111fc1427af
-1220	2200	688314160	C:/Document/mryj/BuildGlasses/Deeplearning/up/picodet_detection_demo/app/build/intermediates/cmake/debug/obj/arm64-v8a/libNative.so	61d180af8331979e
+71	1187	692133556	CMakeFiles/Native.dir/Utils.cc.o	465f7289e7865d69
+1	1553	692133556	CMakeFiles/Native.dir/Native.cc.o	b56f7faac95bd99e
+37	1871	692133556	CMakeFiles/Native.dir/Pipeline.cc.o	c8ea99181b644a8c
+1871	2904	692133557	C:/Document/mryj/BuildGlasses/Deeplearning/up/picodet_detection_demo/app/build/intermediates/cmake/debug/obj/arm64-v8a/libNative.so	d12ffa66b30cae80

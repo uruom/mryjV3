@@ -1,7 +1,7 @@
 [
   {
     "level": "INFO",
-    "message": "Start JSON generation. Platform version: 16 min SDK version: armeabi-v7a",
+    "message": "Start JSON generation. Platform version: 22 min SDK version: armeabi-v7a",
     "file": "C:\\Document\\mryj\\BuildGlasses\\Deeplearning\\up\\picodet_detection_demo\\app\\src\\main\\cpp\\CMakeLists.txt",
     "tag": "debug|armeabi-v7a"
   },

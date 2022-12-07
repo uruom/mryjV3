@@ -15,6 +15,7 @@ import org.opencv.core.Scalar;
 import org.opencv.core.Size;
 import org.opencv.imgproc.Imgproc;
 
+
 public class StereoBMUtil {
     private static final String TAG = StereoBMUtil.class.getName();
     // 【需要根据摄像头修改参数】
@@ -71,8 +72,8 @@ public class StereoBMUtil {
         // 立体校正矩阵映射到畸变矫正矩阵
 
 
-//        Imgproc.initUndistortRectifyMap(cameraMatrixL, distCoeffL, Rl, Pl, imageSize, CvType.CV_32FC1, mapLx, mapLy);
-//        Imgproc.initUndistortRectifyMap(cameraMatrixR, distCoeffR, Rr, Pr, imageSize, CvType.CV_32FC1, mapRx, mapRy);
+        Imgproc.initUndistortRectifyMap(cameraMatrixL, distCoeffL, Rl, Pl, imageSize, CvType.CV_32FC1, mapLx, mapLy);
+        Imgproc.initUndistortRectifyMap(cameraMatrixR, distCoeffR, Rr, Pr, imageSize, CvType.CV_32FC1, mapRx, mapRy);
 
 //        int blockSize = 18;
 //        int numDisparities = 11;
