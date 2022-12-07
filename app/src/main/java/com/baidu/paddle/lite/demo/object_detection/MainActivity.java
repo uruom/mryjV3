@@ -1,4 +1,4 @@
-package com.baidu.paddle.lite.deepLearing.object_detection;
+package com.baidu.paddle.lite.demo.object_detection;
 
 import android.Manifest;
 import android.app.Activity;
@@ -7,25 +7,31 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
-import android.graphics.*;
+import android.graphics.Bitmap;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
-import android.view.*;
-import android.widget.*;
+import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
+import android.widget.ImageButton;
+import android.widget.TextView;
+import android.widget.Toast;
 
-import com.baidu.paddle.lite.deepLearing.common.CameraSurfaceView;
-import com.baidu.paddle.lite.deepLearing.common.Utils;
-import com.baidu.paddle.lite.deepLearing.object_detection.R;
+import com.baidu.paddle.lite.demo.common.CameraSurfaceView;
+import com.baidu.paddle.lite.demo.common.Utils;
+
+import org.opencv.core.Mat;
 
 import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import Veriable.TransmissionVeriable;
+import distance.DistanceCal;
 
 public class MainActivity extends Activity implements View.OnClickListener, CameraSurfaceView.OnTextureChangedListener {
     private static final String TAG = MainActivity.class.getSimpleName();
@@ -160,6 +166,74 @@ public class MainActivity extends Activity implements View.OnClickListener, Came
         }
         return mediaPlayer;
     }
+    private MediaPlayer getMediaAll(int direction,int obj){
+        MediaPlayer mediaPlayer  = MediaPlayer.create(this,R.raw.isstart);
+        switch (direction){
+            case 0:/*左*/
+                switch (obj){
+                    case 0:/*rider  */mediaPlayer = MediaPlayer.create(this,R.raw.isend);break;
+                    case 1:/*train  */mediaPlayer = MediaPlayer.create(this,R.raw.isend);break;
+                    case 2:/*car    */mediaPlayer = MediaPlayer.create(this,R.raw.car_left);break;
+                    case 3:/*bike   */mediaPlayer = MediaPlayer.create(this,R.raw.isend);break;
+                    case 4:/*person */mediaPlayer = MediaPlayer.create(this,R.raw.person_left);break;
+                    case 5:/*signage*/mediaPlayer = MediaPlayer.create(this,R.raw.signage_left);break;
+                    case 6:/*light  */mediaPlayer = MediaPlayer.create(this,R.raw.light_left);break;
+                    case 7:/*trunk  */mediaPlayer = MediaPlayer.create(this,R.raw.isend);break;
+                    case 8:/*bus    */mediaPlayer = MediaPlayer.create(this,R.raw.bus_left);break;
+                    case 9:/*motor  */mediaPlayer = MediaPlayer.create(this,R.raw.motor_left);break;
+                    default:mediaPlayer = MediaPlayer.create(this,R.raw.isstart);break;
+                }
+                break;
+            case 1:/*中*/
+                switch (obj){
+                    case 0:/*rider  */mediaPlayer = MediaPlayer.create(this,R.raw.isend);break;
+                    case 1:/*train  */mediaPlayer = MediaPlayer.create(this,R.raw.isend);break;
+                    case 2:/*car    */mediaPlayer = MediaPlayer.create(this,R.raw.car_double);break;
+                    case 3:/*bike   */mediaPlayer = MediaPlayer.create(this,R.raw.isend);break;
+                    case 4:/*person */mediaPlayer = MediaPlayer.create(this,R.raw.person_double);break;
+                    case 5:/*signage*/mediaPlayer = MediaPlayer.create(this,R.raw.signage_double);break;
+                    case 6:/*light  */mediaPlayer = MediaPlayer.create(this,R.raw.light_double);break;
+                    case 7:/*trunk  */mediaPlayer = MediaPlayer.create(this,R.raw.isend);break;
+                    case 8:/*bus    */mediaPlayer = MediaPlayer.create(this,R.raw.bus_double);break;
+                    case 9:/*motor  */mediaPlayer = MediaPlayer.create(this,R.raw.motor_double);break;
+                    default:mediaPlayer = MediaPlayer.create(this,R.raw.isstart);break;
+                }
+                break;
+            case 2:/*下*/
+                switch (obj){
+                    case 0:/*rider  */mediaPlayer = MediaPlayer.create(this,R.raw.isend);break;
+                    case 1:/*train  */mediaPlayer = MediaPlayer.create(this,R.raw.isend);break;
+                    case 2:/*car    */mediaPlayer = MediaPlayer.create(this,R.raw.car_right);break;
+                    case 3:/*bike   */mediaPlayer = MediaPlayer.create(this,R.raw.isend);break;
+                    case 4:/*person */mediaPlayer = MediaPlayer.create(this,R.raw.person_right);break;
+                    case 5:/*signage*/mediaPlayer = MediaPlayer.create(this,R.raw.signage_right);break;
+                    case 6:/*light  */mediaPlayer = MediaPlayer.create(this,R.raw.light_right);break;
+                    case 7:/*trunk  */mediaPlayer = MediaPlayer.create(this,R.raw.isend);break;
+                    case 8:/*bus    */mediaPlayer = MediaPlayer.create(this,R.raw.bus_right);break;
+                    case 9:/*motor  */mediaPlayer = MediaPlayer.create(this,R.raw.motor_right);break;
+                    default:mediaPlayer = MediaPlayer.create(this,R.raw.isstart);break;
+                }
+
+        }
+        return  mediaPlayer;
+    }
+    private void MediaWithDistance(int[][] cast,int[] motified){
+        for(int i=0;i<motified.length;i+=3){
+            if(cast[i/3][1]==1){
+                if(isPlayingMusic==false){
+                    isPlayingMusic=true;
+                    MediaPlayer mediaPlayerDirection = getMediaAll(cast[i/3][2],motified[i]);
+                    mediaPlayerDirection.start();
+                    while(mediaPlayerDirection.isPlaying()){
+
+                    }
+                    isPlayingMusic = true;
+                }
+            }
+        }
+    }
+
+
 
     @Override
     public boolean onTextureChanged(Bitmap ARGB8888ImageBitmap) {
@@ -200,6 +274,30 @@ public class MainActivity extends Activity implements View.OnClickListener, Came
         }
 //        NewMedia newMedia = (NewMedia) NewMedia.create(this,R.raw.bus_left);
         if(!isPlayingMusic){
+            System.out.println("ZZZZZZZZZZZZZZz");
+            Mat mat = new Mat();
+            System.out.println("PPPPPPPPPPPPPPPPPPPPPPPP");
+            DistanceCal distanceCal = new DistanceCal();
+            System.out.println("MMMMMMMMMMMMMMMMMMMMMM");
+//            transmissionVeriable.getLeftImage();
+            int cX[] = new int[modified.length/3];
+            int cY[] = new int[modified.length/3];
+            System.out.println("QQQQQQQQQQQQQQQQQQQQQ");
+            for(int i=1;i<modified.length;i+=3){
+                cX[i/3]=modified[i];
+                cY[i/3]=modified[i+1];
+            }
+            System.out.println("AAAAAAAAAAAA");
+
+            distanceCal.initImage(transmissionVeriable.getLeftImage(),transmissionVeriable.getRightImage(),cX,cY);
+            int [][] cast = distanceCal.castingJudge();
+            System.out.println("BBBBBBBBBBBBBBBBBB");
+            Thread thread_distance=new Thread(){
+                @Override
+                public void run() {
+                    MediaWithDistance(cast,modified);
+                }
+            };
             final MediaPlayer mediaObject = getMediaObject(modified);
             Thread thread = new Thread(){
                 @Override
@@ -218,7 +316,8 @@ public class MainActivity extends Activity implements View.OnClickListener, Came
 
                 }
             };
-            thread.start();
+            thread_distance.start();
+//            thread.start();
 //            newMedia.start();
         }
         return true;

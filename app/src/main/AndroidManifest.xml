@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-          package="com.baidu.paddle.lite.deepLearing.object_detection">
+          package="com.baidu.paddle.lite.demo.object_detection">
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <!-- 允许应用程序多播状态 -->
     <uses-permission android:name = "android.permission.CHANGE_WIFI_MULTICAST_STATE" />
@@ -19,6 +19,7 @@
     <uses-permission android:name="android.permission.CAMERA"/>
     <uses-feature android:name="android.hardware.camera" />
     <uses-feature android:name="android.hardware.camera.autofocus" />
+    <uses-permission android:name="android.permission.INTERNET"/>
 
     <application
             android:allowBackup="true"
@@ -37,11 +38,11 @@
             </intent-filter>
         </activity>
         <activity
-                android:name="com.baidu.paddle.lite.deepLearing.object_detection.SettingsActivity"
+                android:name="com.baidu.paddle.lite.demo.object_detection.SettingsActivity"
                 android:label="Settings">
         </activity>
         <activity
-            android:name="com.baidu.paddle.lite.deepLearing.object_detection.MainActivity"
+            android:name="com.baidu.paddle.lite.demo.object_detection.MainActivity"
             android:label="Main">
 
         </activity>

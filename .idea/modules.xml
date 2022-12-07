@@ -7,6 +7,16 @@
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/picodet_detection_demo.app.androidTest.iml" filepath="$PROJECT_DIR$/.idea/modules/app/picodet_detection_demo.app.androidTest.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/picodet_detection_demo.app.main.iml" filepath="$PROJECT_DIR$/.idea/modules/app/picodet_detection_demo.app.main.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/picodet_detection_demo.app.unitTest.iml" filepath="$PROJECT_DIR$/.idea/modules/app/picodet_detection_demo.app.unitTest.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/java/picodet_detection_demo.java.iml" filepath="$PROJECT_DIR$/.idea/modules/java/picodet_detection_demo.java.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/openCVLibrary341/picodet_detection_demo.openCVLibrary341.iml" filepath="$PROJECT_DIR$/.idea/modules/openCVLibrary341/picodet_detection_demo.openCVLibrary341.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/openCVLibrary341/picodet_detection_demo.openCVLibrary341.androidTest.iml" filepath="$PROJECT_DIR$/.idea/modules/openCVLibrary341/picodet_detection_demo.openCVLibrary341.androidTest.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/openCVLibrary341/picodet_detection_demo.openCVLibrary341.main.iml" filepath="$PROJECT_DIR$/.idea/modules/openCVLibrary341/picodet_detection_demo.openCVLibrary341.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/openCVLibrary341/picodet_detection_demo.openCVLibrary341.unitTest.iml" filepath="$PROJECT_DIR$/.idea/modules/openCVLibrary341/picodet_detection_demo.openCVLibrary341.unitTest.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/openCVLibrary341/sdk/picodet_detection_demo.opencv.iml" filepath="$PROJECT_DIR$/.idea/modules/openCVLibrary341/sdk/picodet_detection_demo.opencv.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/sdk/picodet_detection_demo.sdk.iml" filepath="$PROJECT_DIR$/.idea/modules/sdk/picodet_detection_demo.sdk.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/sdk/picodet_detection_demo.sdk.androidTest.iml" filepath="$PROJECT_DIR$/.idea/modules/sdk/picodet_detection_demo.sdk.androidTest.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/sdk/picodet_detection_demo.sdk.main.iml" filepath="$PROJECT_DIR$/.idea/modules/sdk/picodet_detection_demo.sdk.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/sdk/picodet_detection_demo.sdk.unitTest.iml" filepath="$PROJECT_DIR$/.idea/modules/sdk/picodet_detection_demo.sdk.unitTest.iml" />
     </modules>
   </component>
 </project>

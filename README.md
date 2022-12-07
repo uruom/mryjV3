@@ -45,14 +45,14 @@ mryjV3/app/src/main/java/deepLearning
 
 ```shell
 # 位置：
-mryjV3/app/src/main/cpp/Native.cc
+mryjV3/app/src/main/java/mryj
 ```
 
-3. `Pipeline.cc`： C++ 预测代码
+3. `musicPlay`： 音乐播放代码
 
 ```shell
 # 位置：
-picodet_detection_demo/app/src/main/cpp/Pipeline.cc
+mryjV3/app/src/main/java/musicPlay
 ```
 
 4. `model.nb` : 模型文件 (opt 工具转化后 Paddle Lite 模型), `pascalvoc_label_list`：训练模型时的 `labels` 文件

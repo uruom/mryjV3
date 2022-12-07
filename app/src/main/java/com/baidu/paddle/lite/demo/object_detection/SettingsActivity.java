@@ -1,4 +1,4 @@
-package com.baidu.paddle.lite.deepLearing.object_detection;
+package com.baidu.paddle.lite.demo.object_detection;
 
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -8,9 +8,9 @@ import android.preference.ListPreference;
 import android.preference.PreferenceManager;
 import android.support.v7.app.ActionBar;
 
-import com.baidu.paddle.lite.deepLearing.common.AppCompatPreferenceActivity;
-import com.baidu.paddle.lite.deepLearing.common.Utils;
-import com.baidu.paddle.lite.deepLearing.object_detection.R;
+import com.baidu.paddle.lite.demo.common.AppCompatPreferenceActivity;
+import com.baidu.paddle.lite.demo.common.Utils;
+import com.baidu.paddle.lite.demo.object_detection.R;
 
 import java.util.ArrayList;
 import java.util.List;

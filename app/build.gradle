@@ -5,7 +5,7 @@ apply plugin: 'com.android.application'
 android {
     compileSdkVersion 28
     defaultConfig {
-        applicationId "com.baidu.paddle.lite.demo.ssd_detection"
+        applicationId "com.baidu.paddle.lite.demo.deepLearning"
         minSdkVersion 15
         targetSdkVersion 28
         versionCode 1
@@ -31,6 +31,15 @@ android {
             version "3.10.2"
         }
     }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+    sourceSets {
+        main {
+            jniLibs.srcDirs = ['libs']
+        }
+    }
     ndkVersion '21.4.7075529'
 }
 
@@ -39,10 +48,12 @@ dependencies {
     implementation 'com.android.support:appcompat-v7:28.0.0'
     implementation 'com.android.support.constraint:constraint-layout:1.1.3'
     implementation 'com.android.support:design:28.0.0'
+    implementation project(path: ':sdk')
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
-//    implementation project(path: ':openCVLibrary341')
+    androidTestImplementation project(path: ':openCVLibrary341')
+    androidTestImplementation project(':opencv')
 }
 
 def archives = [
@@ -53,6 +64,9 @@ def archives = [
         [
                 'src' : 'https://paddlelite-demo.bj.bcebos.com/libs/android/opencv-4.2.0-android-sdk.tar.gz',
                 'dest': 'OpenCV'
+//                'src' : 'https://paddlelite-demo.bj.bcebos.com/libs/android/opencv-4.2.0-android-sdk.tar.gz',
+//                'dest': 'OpenCV'
+
         ],
         [
                 'src': 'https://paddlelite-demo.bj.bcebos.com/demo/object_detection/models/picodet_s_320_coco_for_cpu.tar.gz',

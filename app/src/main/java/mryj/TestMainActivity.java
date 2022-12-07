@@ -11,8 +11,10 @@ import android.widget.Button;
 import android.widget.ImageView;
 
 
-import com.baidu.paddle.lite.deepLearing.object_detection.MainActivity;
-import com.baidu.paddle.lite.deepLearing.object_detection.R;
+import com.baidu.paddle.lite.demo.object_detection.MainActivity;
+import com.baidu.paddle.lite.demo.object_detection.R;
+
+import org.opencv.core.Mat;
 
 import Veriable.TransmissionVeriable;
 import picturetransmission.PictureTransmission2;
@@ -76,6 +78,7 @@ public class TestMainActivity extends AppCompatActivity {
                 System.out.println("oijiojoio");
 //                btn_start.setText("确认开始");
                 running();
+                Mat mat = new Mat();
                 break;
             case IsClose:
                 mediaPlayerIsEnd.start();
@@ -112,6 +115,7 @@ public class TestMainActivity extends AppCompatActivity {
             }
 //            sleep(2000);
         System.out.println("test");
+            Mat mat = new Mat();
         startActivity(intent);
             System.out.println("返回正常");
 //        playMusic.startPlay(transmissionVeriable);

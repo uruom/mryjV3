@@ -1,4 +1,4 @@
-package com.baidu.paddle.lite.deepLearing.object_detection;
+package com.baidu.paddle.lite.demo.object_detection;
 
 import org.junit.Test;
 

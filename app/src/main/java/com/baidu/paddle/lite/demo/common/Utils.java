@@ -1,4 +1,4 @@
-package com.baidu.paddle.lite.deepLearing.common;
+package com.baidu.paddle.lite.demo.common;
 
 import android.content.Context;
 import android.content.res.Resources;

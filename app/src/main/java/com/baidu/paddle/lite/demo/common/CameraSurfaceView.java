@@ -1,4 +1,4 @@
-package com.baidu.paddle.lite.deepLearing.common;
+package com.baidu.paddle.lite.demo.common;
 
 import android.content.Context;
 import android.graphics.Bitmap;
@@ -15,14 +15,14 @@ import android.opengl.Matrix;
 import android.util.AttributeSet;
 import android.util.Log;
 
-import javax.microedition.khronos.egl.EGLConfig;
-import javax.microedition.khronos.opengles.GL10;
-
 import java.io.IOException;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 import java.nio.FloatBuffer;
 import java.util.List;
+
+import javax.microedition.khronos.egl.EGLConfig;
+import javax.microedition.khronos.opengles.GL10;
 
 import Veriable.TransmissionVeriable;
 
