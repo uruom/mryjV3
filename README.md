@@ -20,11 +20,13 @@ Paddle Lite 预测库版本一样的 NDK
 <img src="https://paddlelite-demo.bj.bcebos.com/demo/object_detection/docs_img/android/run_app2.jpg"/>
 </p>
 
+
 > **注意：**
->> 如果您在导入项目、编译或者运行过程中遇到 NDK 配置错误的提示，请打开 ` File > Project Structure > SDK Location`，修改 `Andriod NDK location` 为您本机配置的 NDK 所在路径。
->> 如果您是通过 Andriod Studio 的 SDK Tools 下载的 NDK (见本章节"环境准备")，可以直接点击下拉框选择默认路径。
->> 还有一种 NDK 配置方法，你可以在 `picodet_detection_demo/local.properties` 文件中手动完成 NDK 路径配置，如下图所示
->> 如果以上步骤仍旧无法解决 NDK 配置错误，请尝试根据 Andriod Studio 官方文档中的[更新 Android Gradle 插件](https://developer.android.com/studio/releases/gradle-plugin?hl=zh-cn#updating-plugin)章节，尝试更新Android Gradle plugin版本。
+>
+> > 如果您在导入项目、编译或者运行过程中遇到 NDK 配置错误的提示，请打开 ` File > Project Structure > SDK Location`，修改 `Andriod NDK location` 为您本机配置的 NDK 所在路径。
+> > 如果您是通过 Andriod Studio 的 SDK Tools 下载的 NDK (见本章节"环境准备")，可以直接点击下拉框选择默认路径。
+> > 还有一种 NDK 配置方法，你可以在 `picodet_detection_demo/local.properties` 文件中手动完成 NDK 路径配置，如下图所示
+> > 如果以上步骤仍旧无法解决 NDK 配置错误，请尝试根据 Andriod Studio 官方文档中的[更新 Android Gradle 插件](https://developer.android.com/studio/releases/gradle-plugin?hl=zh-cn#updating-plugin)章节，尝试更新Android Gradle plugin版本。
 
 4. 点击 Run 按钮，自动编译 APP 并安装到手机。(该过程会自动下载 Paddle Lite 预测库和模型，需要联网)。在手机运行前，可以提前打开wifi连接远程摄像头。在有连接的情况下，手机进行识别和处理的将会是远程摄像头传输的图片，反之，则是手机本身摄像头的图片。
 5. 进入app，在中间会有按钮现实当前app状态，为了满足盲人需求，所有状态切换间都有语音播报。点击中间按钮后，即进行识别，对于识别出的障碍物进行方位和物体播报。
@@ -55,132 +57,41 @@ mryjV3/app/src/main/java/mryj
 mryjV3/app/src/main/java/musicPlay
 ```
 
-4. `model.nb` : 模型文件 (opt 工具转化后 Paddle Lite 模型), `pascalvoc_label_list`：训练模型时的 `labels` 文件
+4. `PictureTransmission` : 图片传递代码
 
 ```shell
 # 位置：
-picodet_detection_demo/app/src/main/assets/models/ssd_mobilenet_v1_pascalvoc_for_cpu/model.nb
-picodet_detection_demo/app/src/main/assets/labels/pascalvoc_label_list
+mryjV3/app/src/main/java/picturetransmission
 ```
 
-5. `libpaddle_lite_api_shared.so`：Paddle Lite C++ 预测库
+5. `Veriable`：共享内存区
 
 ```shell
 # 位置
-picodet_detection_demo/app/PaddleLite/cxx/libs/arm64-v8a/libpaddle_lite_api_shared.so
-# 如果要替换动态库 so，则将新的动态库 so 更新到此目录下
+mryjV3/app/src/main/java/Veriable
 ```
 
-6. `build.gradle` : 定义编译过程的 gradle 脚本。（不用改动，定义了自动下载 Paddle Lite 预测和模型的过程）
 
-```shell
-# 位置
-picodet_detection_demo/app/build.gradle
-# 如果需要手动更新模型和预测库，则可将 gradle 脚本中的 `download*` 接口注释即可
-```
+### deepLearning
 
-7. `CMakeLists.txt` : C++ 预测库代码的编译脚本，用于生成 jni 的动态库 `lib_Native.so`
+* 使用模型为 `models/picodet_xs_416_coco_lcnet_new` 
+* 模型更改位置为`mryjV3/app/src/main/res/values/strings.xml` 目录下，更改`<string name="MODEL_DIR_DEFAULT">xxxx</string>`中为自己的内容
 
-```shell
-# 位置
-picodet_detection_demo/app/cpp/CMakeLists.txt
-# 如果有cmake 编译选项更新，可以在 CMakeLists.txt 进行修改即可
-```
-### Java 端
+ ### mryj
 
-* 模型存放，将下载好的模型解压存放在 `app/src/assets/models` 目录下
-* common Java 包
-    在 `app/src/java/com/baidu/paddle/lite/demo/common` 目录下，实现摄像头和框架的公共处理，一般不用修改。其中，Utils.java 用于存放一些公用的且与 Java 基类无关的功能，例如模型拷贝、字符串类型转换等
-* object_detection Java 包
-   在 `app/src/java/com/baidu/paddle/lite/demo/object_detection` 目录下，实现 APP 界面消息事件和 Java/C++ 端代码互传的桥梁功能
-* MainActivity
-    实现 APP 的创建、运行、释放功能
-    重点关注 `checkAndUpdateSettings`和 `onTextureChanged` 函数，实现 APP 界面值向 C++ 端值互传及预测处理流程
-    
-    ```java
-      public void checkAndUpdateSettings() {
-             if (SettingsActivity.checkAndUpdateSettings(this)) {
-                 String realModelDir = getCacheDir() + "/" + SettingsActivity.modelDir;
-                 Utils.copyDirectoryFromAssets(this, SettingsActivity.modelDir, realModelDir);
-                 String realLabelPath = getCacheDir() + "/" + SettingsActivity.labelPath;
-                 Utils.copyFileFromAssets(this, SettingsActivity.labelPath, realLabelPath);
-                 // 初始化
-                 predictor.init(
-                         realModelDir,
-                         realLabelPath,
-                         SettingsActivity.cpuThreadNum,
-                         SettingsActivity.cpuPowerMode,
-                         SettingsActivity.inputWidth,
-                         SettingsActivity.inputHeight,
-                         SettingsActivity.inputMean,
-                         SettingsActivity.inputStd,
-                         SettingsActivity.scoreThreshold);
-             }
-         }
-      
-      public boolean onTextureChanged(Bitmap ARGB8888ImageBitmap) {
-          String savedImagePath = "";
-          synchronized (this) {
-              savedImagePath = MainActivity.this.savedImagePath;
-          }
-          // 预测
-          boolean modified = predictor.process(ARGB8888ImageBitmap, savedImagePath);
-          if (!savedImagePath.isEmpty()) {
-              synchronized (this) {
-                  MainActivity.this.savedImagePath = "";
-              }
-          }
-          lastFrameIndex++;
-          if (lastFrameIndex >= 30) {
-              final int fps = (int) (lastFrameIndex * 1e9 / (System.nanoTime() - lastFrameTime));
-              runOnUiThread(new Runnable() {
-                  public void run() {
-                      tvStatus.setText(Integer.toString(fps) + "fps");
-                  }
-              });
-              lastFrameIndex = 0;
-              lastFrameTime = System.nanoTime();
-          }
-          return modified;
-      }
-    ```
-   
-* SettingActivity
-    实现设置界面各个元素的更新与显示，如果新增/删除界面的某个元素，均在这个类里面实现
-    备注：
-
-    - 参数的默认值可在 `app/src/main/res/values/strings.xml` 查看
-    - 每个元素的 ID 和 value 是对应 `app/src/main/res/xml/settings.xml` 和 `app/src/main/res/values/string.xml` 文件中的值
-    - 这部分内容不建议修改，如果有新增属性，可以按照此格式进行添加
-
-* Native
-    实现 Java 与 C++ 端代码互传的桥梁功能
-    包含三个功能：`init`初始化、 `process`预测处理 和 `release`释放
-    备注：
-        Java 的 native 方法和 C++ 的 native 方法要一一对应
-    
- ### C++ 端（native）
-
- * Native
-    实现 Java 与 C++ 端代码互传的桥梁功能，将 Java 数值转换为 c++ 数值，调用 c++ 端的完成人脸关键点检测功能
-    **注意：**
-    Native 文件生成方法：
+ * TestMainActivity
+   程序主函数，启动整个程序
 
   ```shell
-   cd app/src/java/com/baidu/paddle/lite/demo/face_keypoints_detection
-   # 在当前目录会生成包含 Native 方法的头文件，用户可以将其内容拷贝至 `cpp/Native.cc` 中
-   javac -classpath D:\dev\android-sdk\platforms\android-29\android.jar -encoding utf8 -h . Native.java 
+protected void musicPlay(Estatus estatus)
+ # musicPlay为初始界面的音乐播放函数
+ 
+private void running()
+# running为响应初始界面按钮，且最后有跳转函数，将会跳转至DeepLearning的MainActivity，开始deeplearning的循环
   ```
 
- * Pipeline
-    实现输入预处理、推理执行和输出后处理的流水线处理，支持多个模型的串行处理
-
- * Utils
-    实现其他辅助功能，如 `NHWC` 格式转 `NCHW` 格式、字符串处理等
-
- * 新增模型支持
-    - 在 Pipeline 文件中新增模型的预测类，实现图像预处理、预测和图像后处理功能
-    - 在 Pipeline 文件中 `Pipeline` 类添加该模型预测类的调用和处理
+* Estatus
+* Automat
 
 ## 代码讲解 （使用 Paddle Lite `C++ API` 执行预测）
 
@@ -282,6 +193,7 @@ public void checkAndUpdateSettings() {
         }
 }
 ```
+
 **注意：**
 
 - 如果优化后的模型名字不是 `model.nb`，则需要将优化后的模型名字更新为 `model.nb` 或修改 `picodet_detection_demo/app/src/main/cpp/Pipeline.cc` 中代码
@@ -344,6 +256,7 @@ public void checkAndUpdateSettings() {
 ### 更新输入/输出预处理
 
 1. 更新输入数据
+
   - 将更新的图片存放在 `picodet_detection_demo/app/src/main/assets/images/` 下；
   - 更新文件 `picodet_detection_demo/app/src/main/java/com.baidu.paddle.lite.demo.object_detection/MainActivity.java` 中的代码
 
@@ -385,13 +298,13 @@ public boolean onTextureChanged(Bitmap ARGB8888ImageBitmap) {
 
 
 2. 更新输入预处理
-此处需要更新 `picodet_detection_demo/app/src/main/cpp/Pipeline.cc` 中的 `Detector::Preprocess(const cv::Mat &rgbaImage)` 方法
+   此处需要更新 `picodet_detection_demo/app/src/main/cpp/Pipeline.cc` 中的 `Detector::Preprocess(const cv::Mat &rgbaImage)` 方法
 
 **注意：** 如果模型的的输入 tensor 个数、输入 shape 和数据类型 Dtype 有更新，可以在 `Detector::Preprocess(const cv::Mat &rgbaImage)` 方法中更新模型的输入
 
 
 3. 更新输出预处理
-此处需要更新 `picodet_detection_demo/app/src/main/cpp/Pipeline.cc` 中的 `Detector::Postprocess(std::vector<Object> *results)` 方法
+   此处需要更新 `picodet_detection_demo/app/src/main/cpp/Pipeline.cc` 中的 `Detector::Postprocess(std::vector<Object> *results)` 方法
 
 **注意：**
 
@@ -446,21 +359,22 @@ bool Pipeline::Process(cv::Mat &rgbaImage, std::string savedImagePath)；
 参数的默认值可在 `app/src/main/res/values/strings.xml` 查看
 
 - model setting：（需要提前将模型/图片/标签放在 assets 目录，或者通过 adb push 将其放置手机目录）
-    - model_path 默认是 `models/ssd_mobilenet_v1_pascalvoc_for_cpu`
-    - label_path 默认是 `labels/pascalvoc_label_list`
+  - model_path 默认是 `models/ssd_mobilenet_v1_pascalvoc_for_cpu`
+  - label_path 默认是 `labels/pascalvoc_label_list`
 
 - CPU setting：
-    - power_mode 默认是 `LITE_POWER_HIGH`
-    - thread_num 默认是 1
+  - power_mode 默认是 `LITE_POWER_HIGH`
+  - thread_num 默认是 1
 
 - input setting：
-    - input_height 默认是 `300`
-    - input_width 默认是 `300`
-    - input_mean 默认是 `0.5,0.5,0.5`
-    - input_std  默认是 `0.5,0.5,0.5`
-    - score_threshold 默认是 `0.5`
+  - input_height 默认是 `300`
+  - input_width 默认是 `300`
+  - input_mean 默认是 `0.5,0.5,0.5`
+  - input_std  默认是 `0.5,0.5,0.5`
+  - score_threshold 默认是 `0.5`
 
 ## 性能优化方法
+
 如果你觉得当前性能不符合需求，想进一步提升模型性能，可参考[首页中性能优化文档](/README.md)完成性能优化。
 
 
